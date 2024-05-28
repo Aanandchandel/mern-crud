@@ -1,0 +1,26 @@
+.Login{
+    height: 100vh;
+    width: 100vw;
+    background-color: aliceblue;
+}
+.form{
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    width: 50vw;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+
+}
+.form>input{
+    width: 40vw;
+    height: 1rem;
+    padding: 0.5rem;
+}
+.submit{
+    width: 10%;
+    padding: 0;
+    margin: 0;
+}
