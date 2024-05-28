@@ -10,6 +10,12 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json()); // Parse incoming JSON requests
 app.use(express.json());
+
+
+app.get("/",(req,res)=>{
+    res.send({message:"heloow"})
+
+})
 //to create user
 app.post("/user",async(req,res)=>{
     try{
@@ -37,7 +43,7 @@ app.patch("/update", async(req,res)=>{
 
     try{
         const {password,name,email}=req.body;
-        const user=User.findOneAndUpdate({email},{password,name,email});
+        const user=await User.findOneAndUpdate({email},{password,name,email});
         res.status(200).send(user);
     }catch(err){
         res.send({message:err})
@@ -46,7 +52,7 @@ app.patch("/update", async(req,res)=>{
 app.delete("/delete",async(req,res)=>{
     try {
         const {email}=req.body
-        const user=User.findOneAndDelete({email});
+        const user= await User.findOneAndDelete({email});
         res.send(user);
     } catch (err) {
         res.send({message:err})
