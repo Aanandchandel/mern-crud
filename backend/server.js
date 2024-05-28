@@ -39,7 +39,7 @@ app.get("/getuser",async(req,res)=>{
 })
 
 //to update user 
-app.patch("/update", async(req,res)=>{
+app.put("/update", async(req,res)=>{
 
     try{
         const {password,name,email}=req.body;

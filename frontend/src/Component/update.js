@@ -1,9 +1,11 @@
 import "./login.css"
 import { useState } from "react"
 const Update=()=>{
+
+    
     async function postData(url = "", data = {}) {
         const response = await fetch(url, {
-         method: "post", 
+         method: "put", 
          mode: "cors", 
          headers: {
              "Content-Type": "application/json",},
@@ -15,7 +17,7 @@ const Update=()=>{
     try{
 
         if(userInfo.name&&userInfo.email&&userInfo.password){
-            postData("http://localhost:4000/", userInfo).then((data) => {
+            postData("http://localhost:4000/update", userInfo).then((data) => {
                 console.log(data);
                 
             });

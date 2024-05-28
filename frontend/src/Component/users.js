@@ -1,43 +1,72 @@
-import { useState,useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 
-
-      
-const Users=()=>{
-    async function getData(url = "") {
-        const response = await fetch(url, {
-         method: "GET", 
-         mode: "cors", 
-         headers: {
-             "Content-Type": "application/json",},
-       //   body: JSON.stringify(data), 
-           });
-           return response.json(); 
-       }
-   
-
-    useEffect(()=>{
-        try{
-
-            
-            getData("http://localhost:4000/").then((data) => {
-                console.log(data);
-                setData(data) 
+const Users = () => {
+    const [data, setData] = useState([]);
+    const deleteuser = async (email) => {
+        try {
+            const response = await fetch("http://localhost:4000/delete", {
+                method: "delete",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(email),
             });
-        }catch(err){console.log(err)}
+            const userData = await response.json();
+            setData(userData);
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
-    },[])
-const [data,setData]=useState([{name:"aanand"},{name:"aanand"},{name:"aanand"},{name:"aanand"}])
-    return(<div className=" Users">
-        <h1>Users</h1>
-        <ul>
-{data.map((item)=>{ return<li key={nanoid()}>{item.name}</li>})}
+    
 
-
-        </ul>
+    useEffect(() => {
         
+        const fetchData = async () => {
+            try {
+                const response = await fetch("http://localhost:4000/getuser", {
+                    method: "GET",
+                    mode: "cors",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+                const userData = await response.json();
+                setData(userData);
+            } catch (err) {
+                console.log(err);
+            }
+        };
 
-    </div>)
+        fetchData();
+    }, []);
 
-}
-export default Users
+    return (
+        <div className="Users">
+            <h1>Users</h1>
+            <ul>
+                {data.map((item) => (
+                    <li key={nanoid()}>
+                        {item.email ? (
+                            <div>
+                                <span>{item.email}</span><br/>
+                                <span>{item.name}</span>
+                                <button onClick={()=>{
+                                    console.log({email:item.email})
+                                    deleteuser({email:item.email} ).then((rs) => {
+                                        console.log(rs);});
+                                }}>Delete</button>
+                            </div>
+                        ) : (
+                            <span>{item.name}</span>
+                        )}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+};
+
+export default Users;

@@ -15,17 +15,17 @@ const Login=()=>{
     try{
 
         if(userInfo.name&&userInfo.email&&userInfo.password){
-            postData("http://localhost:4000/", userInfo).then((data) => {
+            postData("http://localhost:4000/user", userInfo).then((data) => {
                 console.log(data);
                 
             });
-            
-            
         }else{
             setMessage("enter valuse in fields ")
         }
     }catch(err){console.log(err)    }
 }
+            
+            
 
 
     const [message,setMessage]=useState("")
