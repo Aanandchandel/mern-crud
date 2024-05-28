@@ -1,6 +1,33 @@
 import "./login.css"
-import { useState,useEffect } from "react"
+import { useState } from "react"
 const Login=()=>{
+    async function postData(url = "", data = {}) {
+        const response = await fetch(url, {
+         method: "post", 
+         mode: "cors", 
+         headers: {
+             "Content-Type": "application/json",},
+             body: JSON.stringify(data), 
+           });
+           return response.json(); 
+            }
+   const onSubmit=()=>{
+    try{
+
+        if(userInfo.name&&userInfo.email&&userInfo.password){
+            postData("http://localhost:4000/", userInfo).then((data) => {
+                console.log(data);
+                
+            });
+            
+            
+        }else{
+            setMessage("enter valuse in fields ")
+        }
+    }catch(err){console.log(err)    }
+}
+
+
     const [message,setMessage]=useState("")
     let userInfo={}
 
@@ -9,17 +36,13 @@ const Login=()=>{
         userInfo[name]=e.target.value;
         console.log(userInfo)
     }
-
-    useEffect(()=>{
-
-    },[])
     return(<div className="Login">
         <div  className="form">
             <h1>Create User</h1>
 <input onKeyDown={getvalue} name="name" type="text"placeholder="name" />
 <input type="email" onKeyDown={getvalue}  placeholder="email" name="email" />
 <input type="password" onKeyDown={getvalue} placeholder="password" name="password" />
-<button className="submit">submit</button>
+<button onClick={onSubmit} className="submit">submit</button>
 <p>{message}</p>
 
         </div>
